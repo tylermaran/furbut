@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Furbut Button!</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <!-- Creates Button -->
+  <div class="container">
+    <button class="btn-success" id="cat-button">Click for Catsnakes!</button>
+  </div>
+  
+  <div class="container">
+    <div id="images"></div>
+  </div>
+  <!-- Creates div to stick the cat images in -->
+
+  <!-- Links to jquery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
+  <!-- Begin Javascript -->
+    <script type="text/javascript">
+    //establishes function for button clicks
+    $("#cat-button").on("click", function() {
+
+      // Creates a variable equal to the query link
+      var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=ferret";
+
+      // Uses ajax function to ping giphy api for the queryURL
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+
+      // .done - checks to see if the function has completed its request
+      // response is the variable passed to the function (comes from the method: "GET")
+      .done(function(response) {
+        console.log(response);
+        //response comes back as an object
+        // sets variable equal to the image url from the response object
+        var imageUrl = response.data.image_original_url;
+
+        //creating and storing an image tag
+        var catImage = $("<img>");
+
+        //setting the catimage src attribute to imageUrl
+        catImage.attr("src", imageUrl);
+        catImage.attr("alt", "cat image");
+
+        //prepends the catImage to div:images
+        $("#images").html(catImage);
+      });
+    });
+  </script>
+</body>
+
+</html>
